@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(utapy.link)"
+      "WebFetch(utapy.link)",
+      "Bash(git diff *)"
     ]
-  }
+  },
+  "$version": 3
 }
