@@ -35,5 +35,3 @@ export default async function ProdutosPage({ params }: ProdutosPageProps) {
 
   return <StorefrontClient store={store} products={products} />;
 }
-
-export const revalidate = 60;
