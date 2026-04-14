@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Store {
+  id          String     @id @default(uuid())
+  slug        String     @unique
+  name        String
+  description String?
+  password    String
+  createdAt   DateTime   @default(now())
+  products    Product[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  price       Float
+  image       String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([storeId, active])
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  sessionId String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+
+  @@unique([sessionId, productId])
+}
