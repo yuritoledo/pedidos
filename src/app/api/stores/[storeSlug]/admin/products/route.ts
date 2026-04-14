@@ -87,6 +87,30 @@ export async function PUT(
 
   const body = await request.json();
   const { id, ...data } = body;
+
+  if (!id) {
+    return NextResponse.json({ error: 'Product ID required' }, { status: 400 });
+  }
+
+  // Verify product belongs to this store
+  const store = await prisma.store.findUnique({
+    where: { slug: params.storeSlug },
+    select: { id: true },
+  });
+
+  if (!store) {
+    return NextResponse.json({ error: 'Store not found' }, { status: 404 });
+  }
+
+  const existing = await prisma.product.findUnique({
+    where: { id },
+    select: { storeId: true },
+  });
+
+  if (!existing || existing.storeId !== store.id) {
+    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+  }
+
   const validated = productSchema.partial().safeParse(data);
 
   if (!validated.success) {
@@ -111,6 +135,29 @@ export async function DELETE(
 
   const body = await request.json();
   const { id } = body;
+
+  if (!id) {
+    return NextResponse.json({ error: 'Product ID required' }, { status: 400 });
+  }
+
+  // Verify product belongs to this store
+  const store = await prisma.store.findUnique({
+    where: { slug: params.storeSlug },
+    select: { id: true },
+  });
+
+  if (!store) {
+    return NextResponse.json({ error: 'Store not found' }, { status: 404 });
+  }
+
+  const existing = await prisma.product.findUnique({
+    where: { id },
+    select: { storeId: true },
+  });
+
+  if (!existing || existing.storeId !== store.id) {
+    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+  }
 
   await prisma.product.update({
     where: { id },
