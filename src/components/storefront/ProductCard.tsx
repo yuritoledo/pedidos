@@ -39,6 +39,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
         <span className="text-xl font-bold">{formatPrice(product.price)}</span>
         <Button
           size="sm"
+          aria-label={`Add ${product.name} to cart`}
           onClick={() =>
             onAddToCart(product.id, {
               name: product.name,

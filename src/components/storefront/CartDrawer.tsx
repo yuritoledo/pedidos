@@ -65,6 +65,7 @@ export function CartDrawer({
                         variant="outline"
                         size="icon"
                         className="h-7 w-7"
+                        aria-label="Decrease quantity"
                         onClick={() => onUpdateQuantity(item.productId, item.quantity - 1)}
                       >
                         <Minus className="h-3 w-3" />
@@ -74,6 +75,7 @@ export function CartDrawer({
                         variant="outline"
                         size="icon"
                         className="h-7 w-7"
+                        aria-label="Increase quantity"
                         onClick={() => onUpdateQuantity(item.productId, item.quantity + 1)}
                       >
                         <Plus className="h-3 w-3" />
@@ -82,6 +84,7 @@ export function CartDrawer({
                         variant="ghost"
                         size="icon"
                         className="h-7 w-7 ml-auto"
+                        aria-label="Remove item"
                         onClick={() => onRemoveItem(item.productId)}
                       >
                         <Trash2 className="h-3 w-3" />
