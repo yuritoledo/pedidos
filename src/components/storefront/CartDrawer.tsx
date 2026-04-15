@@ -10,6 +10,7 @@ interface CartDrawerProps {
   onOpenChange: (open: boolean) => void;
   items: CartItem[];
   total: number;
+  whatsappNumber: string;
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
   onClearCart: () => void;
@@ -29,6 +30,7 @@ export function CartDrawer({
   onOpenChange,
   items,
   total,
+  whatsappNumber,
   onUpdateQuantity,
   onRemoveItem,
   onClearCart,
@@ -38,7 +40,7 @@ export function CartDrawer({
       (i) => `• ${i.quantity}x ${i.product?.name} — ${formatPrice((i.product?.price ?? 0) * i.quantity)}`
     );
     const msg = `Olá! Gostaria de fazer um pedido:\n\n${lines.join('\n')}\n\n*Total: ${formatPrice(total)}*`;
-    window.open(`https://wa.me/5519991889630?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   return (

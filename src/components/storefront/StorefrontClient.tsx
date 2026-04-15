@@ -48,6 +48,7 @@ export function StorefrontClient({ store, products }: StorefrontClientProps) {
         onOpenChange={setCartOpen}
         items={items}
         total={total}
+        whatsappNumber={store.whatsappNumber}
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeItem}
         onClearCart={clearCart}

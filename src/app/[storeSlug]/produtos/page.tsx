@@ -23,7 +23,7 @@ export default async function ProdutosPage({ params }: ProdutosPageProps) {
 
   return (
     <StorefrontClient
-      store={{ id: store.id, slug: store.slug, name: store.name, description: store.description }}
+      store={{ id: store.id, slug: store.slug, name: store.name, description: store.description, whatsappNumber: store.whatsappNumber }}
       products={store.products.map((p) => ({
         id: p.id,
         name: p.name,

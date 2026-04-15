@@ -12,4 +12,5 @@ export interface Store {
   slug: string;
   name: string;
   description: string | null;
+  whatsappNumber: string;
 }
