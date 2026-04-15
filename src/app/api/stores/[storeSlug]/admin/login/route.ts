@@ -22,6 +22,14 @@ export async function POST(
     return NextResponse.json({ error: 'Store not found' }, { status: 404 });
   }
 
+  if (store.status === 'pending') {
+    return NextResponse.json({ error: 'Sua loja ainda não foi aprovada' }, { status: 403 });
+  }
+
+  if (store.status === 'suspended') {
+    return NextResponse.json({ error: 'Sua loja foi suspensa' }, { status: 403 });
+  }
+
   const valid = await bcrypt.compare(password, store.password);
 
   if (!valid) {

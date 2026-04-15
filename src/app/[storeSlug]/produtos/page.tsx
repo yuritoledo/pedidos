@@ -1,37 +1,37 @@
 import { notFound } from 'next/navigation';
 import { StorefrontClient } from '@/components/storefront/StorefrontClient';
-import { Product, Store } from '@/types/product';
+import prisma from '@/lib/prisma';
 
 interface ProdutosPageProps {
   params: { storeSlug: string };
 }
 
-async function fetchStoreData(slug: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/stores/${slug}/products`, {
-    next: { revalidate: 60 },
+export default async function ProdutosPage({ params }: ProdutosPageProps) {
+  const store = await prisma.store.findUnique({
+    where: { slug: params.storeSlug },
+    include: {
+      products: {
+        where: { active: true },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
   });
 
-  if (!res.ok) {
-    return null;
-  }
-
-  return res.json();
-}
-
-export async function generateStaticParams() {
-  return [];
-}
-
-export default async function ProdutosPage({ params }: ProdutosPageProps) {
-  const data = await fetchStoreData(params.storeSlug);
-
-  if (!data) {
+  if (!store || store.status !== 'active') {
     notFound();
   }
 
-  const store: Store = data.store;
-  const products: Product[] = data.products;
-
-  return <StorefrontClient store={store} products={products} />;
+  return (
+    <StorefrontClient
+      store={{ id: store.id, slug: store.slug, name: store.name, description: store.description }}
+      products={store.products.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        image: p.image,
+        active: p.active,
+      }))}
+    />
+  );
 }

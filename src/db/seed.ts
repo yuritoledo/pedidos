@@ -14,6 +14,8 @@ async function main() {
       name: 'Demo Store',
       description: 'A demo storefront',
       password: hashedPassword,
+      whatsappNumber: '5519991234567',
+      status: 'active',
       products: {
         create: [
           { name: 'Product 1', description: 'First product', price: 29.99, active: true },

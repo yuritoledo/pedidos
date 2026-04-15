@@ -12,7 +12,9 @@ model Store {
   slug        String     @unique
   name        String
   description String?
-  password    String
+  password        String
+  whatsappNumber  String
+  status          String     @default("active")
   createdAt   DateTime   @default(now())
   products    Product[]
 }

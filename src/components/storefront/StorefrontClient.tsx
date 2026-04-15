@@ -24,13 +24,14 @@ export function StorefrontClient({ store, products }: StorefrontClientProps) {
         onCartClick={() => setCartOpen(true)}
       />
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-3 py-5">
         {products.length === 0 ? (
-          <p className="text-center text-muted-foreground py-12">
-            No products available yet
-          </p>
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
+            <span className="text-5xl">🛍️</span>
+            <p className="text-base">Nenhum produto disponível ainda</p>
+          </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
